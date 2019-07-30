@@ -1,0 +1,27 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: istio
+  namespace: tracing
+spec:
+  releaseName: istio
+  chart:
+    repository: https://gcsweb.istio.io/gcs/istio-prerelease/prerelease/1.1.0/1.1.0/charts/
+    name: istio
+    version: 1.1.0
+  values:
+    global:
+      enableTracing: true
+    tracing:
+      enabled: true
+    pilot:
+      traceSampling: 100
+    prometheus:
+      enabled: false
+    
+    mixer:
+      telemetry:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500m

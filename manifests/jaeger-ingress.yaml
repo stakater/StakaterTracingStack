@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:    
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: external-ingress
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/upstream-vhost: jaeger-query.istio-system.svc.cluster.local
+    forecastle.stakater.com/appName: Jaeger
+    forecastle.stakater.com/expose: "true"
+    forecastle.stakater.com/icon: https://raw.githubusercontent.com/stakater/ForecastleIcons/master/jaeger.png
+    ingress.kubernetes.io/rewrite-target: /
+  name: jaeger-ingress
+  namespace: tracing
+spec:
+  rules:
+  - host: jaeger-tracing.workshop.stakater.com
+    http:
+      paths:
+      - backend:
+          serviceName: jaeger-query
+          servicePort: 16686
+  tls:
+  - hosts:
+    - jaeger-tracing.workshop.stakater.com
+    secretName: tls-cert
