@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - jaeger-tracing.workshop.stakater.com
-    secretName: tls-cert
+    secretName: <secret-name>
